@@ -13,8 +13,8 @@ class DisplayOptions{
     
     public static function display_options(){
         global $product;
-        $holePrice = '50';
-        $cornerPrice = '50';
+        $holePrice = '150kr for det første, derefter 50kr stykket';
+        $cornerPrice = '50kr stykket';
         if (get_post_meta($product->get_id(), '_enable_custom_options', true) === 'yes') {
             echo '<div class="customOptions">';
             echo '<fieldset class="customOptions">';
@@ -54,7 +54,7 @@ class DisplayOptions{
             }
 
             echo '</div>';
-            echo '<i id="holePrice">+' . $holePrice . '</i>';
+            echo '<i id="holePrice">' . $holePrice . '</i>';
             echo '</fieldset>';
             echo '<fieldset class="customOptions">';
 
@@ -91,7 +91,7 @@ class DisplayOptions{
                     <input type="file" name="corners_schematic" id="corners_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
                 </p>
                 </div>
-                <?php echo '<i id="cornerPrice">+' . $cornerPrice . '</i>'; ?>
+                <?php echo '<i id="cornerPrice">' . $cornerPrice . '</i>'; ?>
                 </fieldset>
             <?php
             }
@@ -105,7 +105,7 @@ class DisplayOptions{
                 <label>
                     <input type="radio" name="lakering_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?>
                 </label><br>
-                <i id="lakeringPrice" style="display: none;">0</i>
+                <i id="lakeringPrice" style="display: none;">+0kr,-</i>
             </fieldset>
             <?php
             }

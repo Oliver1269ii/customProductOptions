@@ -9,7 +9,8 @@ final class Init {
     public static function get_services(){
         return [
             admin\ProductSettings::class,
-            frontend\DisplayOptions::class
+            frontend\DisplayOptions::class,
+            base\Enqueue::class
         ];
     }
 
