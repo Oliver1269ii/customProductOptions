@@ -1,0 +1,19 @@
+{
+    "name": "voksevaerket/custom-product-options",
+    "description": "Custom product options for staalet.dk",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "inc\\": "./inc"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oliver1269",
+            "email": "olivermarcuslarsen@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
