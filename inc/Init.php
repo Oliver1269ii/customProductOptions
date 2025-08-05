@@ -8,7 +8,8 @@ namespace inc;
 final class Init {
     public static function get_services(){
         return [
-            admin\ProductSettings::class
+            admin\ProductSettings::class,
+            frontend\DisplayOptions::class
         ];
     }
 
