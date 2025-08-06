@@ -15,7 +15,16 @@ class DisplayOptions{
         global $product;
         $holePrice = '150kr for det første, derefter 50kr stykket';
         $cornerPrice = '50kr stykket';
-        if (get_post_meta($product->get_id(), '_enable_custom_options', true) === 'yes') {
+
+        ?>
+        <select name="height" style="width: 100%" required="">
+                            <option selected="true" disabled="disabled" value="">Vælg tykkelse</option>
+                            <option value="1">1 mm</option><option value="1.5">1.5 mm</option><option value="2">2 mm</option><option value="3">3 mm</option><option value="4">4 mm</option><option value="5">5 mm</option><option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option>                        </select>
+        <input type="number" name="length" step="1" min="30" max="3000" value="" class="input-text" placeholder="100" required="">
+        <input type="number" name="width" step="1" min="30" max="1500" value="" class="input-text" placeholder="100" required="">
+        <?php
+
+        if (get_post_meta($product->get_id(), '_enable_custom_options', true) === 'yes') { // check if this gives errors when set to no, if so, make a check to see if its set
             echo '<div class="customOptions">';
             echo '<fieldset class="customOptions">';
             if (self::getPostMeta('_enable_holes')) { 

@@ -10,6 +10,8 @@ final class Init {
         return [
             admin\ProductSettings::class,
             frontend\DisplayOptions::class,
+            frontend\HandleCustomCartData::class,
+            frontend\HandleCustomFees::class,
             base\Enqueue::class
         ];
     }
