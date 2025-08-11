@@ -16,13 +16,35 @@ class DisplayOptions{
         $holePrice = '150kr for det første, derefter 50kr stykket';
         $cornerPrice = '50kr stykket';
 
-        ?>
-        <select name="height" style="width: 100%" required="">
+        /**
+        <table class="aveo_calculator cubric">
+                <tbody>
+                <tr>
+                    <td class="header" colspan="2">Tykkelse</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <select name="height" style="width: 100%" required="">
                             <option selected="true" disabled="disabled" value="">Vælg tykkelse</option>
                             <option value="1">1 mm</option><option value="1.5">1.5 mm</option><option value="2">2 mm</option><option value="3">3 mm</option><option value="4">4 mm</option><option value="5">5 mm</option><option value="6">6 mm</option><option value="8">8 mm</option><option value="10">10 mm</option>                        </select>
-        <input type="number" name="length" step="1" min="30" max="3000" value="" class="input-text" placeholder="100" required="">
-        <input type="number" name="width" step="1" min="30" max="1500" value="" class="input-text" placeholder="100" required="">
-        <?php
+                    </td>
+                </tr>
+                <tr>
+                    <td>Længde (mm)<br>
+                        <span>Mellem 30mm og 3000mm</span></td>
+                    <td><input type="number" name="length" step="1" min="30" max="3000" value="" class="input-text" placeholder="100" required=""></td>
+                </tr>
+                <tr>
+                    <td>Bredde (mm)<br>
+                        <span>Mellem 30mm og 1500mm</span></td>
+                    <td><input type="number" name="width" step="1" min="30" max="1500" value="" class="input-text" placeholder="100" required=""></td>
+                </tr>
+                <tr class="single_price"><td>Pris pr. stk</td><td><span class="woocommerce-Price-amount amount"><bdi>3,13&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
+                <tr class="cut_price"><td>Klip</td><td><span class="woocommerce-Price-amount amount"><bdi>20,00&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
+                <tr class="total_price"><td>Total Pris</td><td><span class="woocommerce-Price-amount amount"><bdi>23,13&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
+                </tbody>
+            </table>
+        */
 
         if (get_post_meta($product->get_id(), '_enable_custom_options', true) === 'yes') { // check if this gives errors when set to no, if so, make a check to see if its set
             echo '<div class="customOptions">';
@@ -63,7 +85,7 @@ class DisplayOptions{
             }
 
             echo '</div>';
-            echo '<i id="holePrice">' . $holePrice . '</i>';
+            echo '<i class="holePrice">' . $holePrice . '</i>';
             echo '</fieldset>';
             echo '<fieldset class="customOptions">';
 
@@ -100,7 +122,7 @@ class DisplayOptions{
                     <input type="file" name="corners_schematic" id="corners_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
                 </p>
                 </div>
-                <?php echo '<i id="cornerPrice">' . $cornerPrice . '</i>'; ?>
+                <?php echo '<i class="cornerPrice">' . $cornerPrice . '</i>'; ?>
                 </fieldset>
             <?php
             }
@@ -114,7 +136,7 @@ class DisplayOptions{
                 <label>
                     <input type="radio" name="lakering_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?>
                 </label><br>
-                <i id="lakeringPrice" style="display: none;">+0kr,-</i>
+                <i class="lakeringPrice" id="lakeringPriceDropDown" style="display: none;">+0kr,-</i>
             </fieldset>
             <?php
             }

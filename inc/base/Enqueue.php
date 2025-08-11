@@ -21,6 +21,7 @@ class Enqueue{
                     '1.0',
                     true
                 );
+            
             }
         }
     }
