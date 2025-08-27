@@ -21,6 +21,13 @@ class Enqueue{
                     '1.0',
                     true
                 );
+
+                wp_enqueue_style(
+                    'ExamplePluginStyle', // Referral name
+                    plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/css/FrontendCustomOptionsCSS.css',
+                    array(),
+                    '1.0'
+                );
             
             }
         }

@@ -6,7 +6,7 @@
 Plugin Name: Stålet Custom Product Options
 Plugin URI: https://github.com/Oliver1269ii/customProductOptions
 Description: A custom plugin for custom settings
-Version: 1.0.0
+Version: 1.2.3
 Author: Oliver "Oliver1269" Larsen
 Author URI: https://github.com/Oliver1269ii
 License: GPL-3.0-or-later
@@ -28,3 +28,7 @@ register_deactivation_hook( __FILE__, function(){ Deactivate::deactivate();});
 if ( class_exists( 'inc\\Init' ) ) {
 	inc\Init::register_services();
 }
+
+$GLOBALS['firstHolePrice'] = 150;
+$GLOBALS["additionalHolePrice"] = 50;
+$GLOBALS["cornerPrice"] = 50;

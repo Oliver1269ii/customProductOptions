@@ -15,7 +15,7 @@ class HandleCustomCartData {
     }
     public static function addCustomOptionsToCart($cart_item_data, $product_id) {
         if (isset($_POST['holes_choice']) && $_POST['holes_choice'] === 'Yes') {
-            $cart_item_data['holes'] = floatval($_POST['holes_quantity']) . __('pc.', 'staaletCustomOptions');
+            $cart_item_data['holes'] = floatval($_POST['holes_quantity']) . __('stk.', 'staaletCustomOptions');
             
             if (isset($_POST['holes_quantity']) && !empty($_POST['holes_quantity'])) {
                 $cart_item_data['holes_quantity'] = intval($_POST['holes_quantity']);
@@ -36,7 +36,7 @@ class HandleCustomCartData {
         }
 
         if (isset($_POST['corners_choice']) && $_POST['corners_choice'] === 'Yes') {
-            $cart_item_data['corners'] = intval($_POST['corners_quantity']) .  __('pc.', 'staaletCustomOptions');
+            $cart_item_data['corners'] = intval($_POST['corners_quantity']) .  __('stk.', 'staaletCustomOptions');
             
             if (isset($_POST['corners_quantity']) && !empty($_POST['corners_quantity'])) {
                 $cart_item_data['corners_quantity'] = intval($_POST['corners_quantity']);
@@ -94,32 +94,32 @@ class HandleCustomCartData {
     public static function displayDataInCart($item_data, $cart_item) {
         if (!empty($cart_item['holes'])) {
             $item_data[] = array(
-                'key' => __('Holes', 'staaletCustomOptions'),
+                'key' => __('Huller', 'staaletCustomOptions'),
                 'value' => $cart_item['holes']
             );
         }
         if (!empty($cart_item['holes_diameter'])) {
             $item_data[] = array(
-                'key' => __('Holes Diameter', 'staaletCustomOptions'),
+                'key' => __('Huller Diameter', 'staaletCustomOptions'),
                 'value' => $cart_item['holes_diameter'] . ' mm'
             );
         }
         if (!empty($cart_item['holes_schematic'])) {
             $item_data[] = array(
-                'key' => __('Holes Schematic', 'staaletCustomOptions'),
+                'key' => __('Huller Schematic', 'staaletCustomOptions'),
                 'value' => basename($cart_item['holes_schematic'])
             );
         }
 
         if (!empty($cart_item['corners'])) {
             $item_data[] = array(
-                'key' => __('Corners', 'staaletCustomOptions'),
+                'key' => __('Hjørner', 'staaletCustomOptions'),
                 'value' => $cart_item['corners']
             );
         }
         if (!empty($cart_item['corners_radius'])) {
             $item_data[] = array(
-                'key' => __('Corner Radius', 'staaletCustomOptions'),
+                'key' => __('Hjørner Radius', 'staaletCustomOptions'),
                 'value' => $cart_item['corners_radius'] . ' mm'
             );
         }
@@ -133,7 +133,7 @@ class HandleCustomCartData {
         if (!empty($cart_item['lakering'])) {
             $item_data[] = array(
                 'key' => __('Lakering', 'staaletCustomOptions'),
-                'value' => __('Yes', 'staaletCustomOptions')
+                'value' => __('Ja', 'staaletCustomOptions')
             );
         }
         return $item_data;
@@ -141,11 +141,11 @@ class HandleCustomCartData {
     
     public static function saveOptionsToOrder($item, $cart_item_key, $values, $order) {
         $fields = [
-            'holes' => __('Holes', 'staaletCustomOptions'),
-            'holes_diameter' => __('Holes Diameter (mm)', 'staaletCustomOptions'),
-            'holes_schematic' => __('Holes Schematic URL', 'staaletCustomOptions'),
-            'corners' => __('Rounded Corners', 'staaletCustomOptions'),
-            'corners_radius' => __('Corner Radius (mm)', 'staaletCustomOptions'),
+            'holes' => __('Huller', 'staaletCustomOptions'),
+            'holes_diameter' => __('Huller Diameter (mm)', 'staaletCustomOptions'),
+            'holes_schematic' => __('Huller Schematic URL', 'staaletCustomOptions'),
+            'corners' => __('Afrundede Hjørner', 'staaletCustomOptions'),
+            'corners_radius' => __('Hjørne Radius (mm)', 'staaletCustomOptions'),
             'corners_schematic' => __('Corners Schematic URL', 'staaletCustomOptions'),
             'lakering' => __('Lakering', 'staaletCustomOptions'),
         ];
