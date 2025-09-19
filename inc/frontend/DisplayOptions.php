@@ -15,7 +15,7 @@ class DisplayOptions{
         global $product;
         $holePrice = '0 kr.';
         $cornerPrice = '200 kr.';
-		?>
+        ?>
         
         <table class="aveo_calculator cubric">
                 <tbody>
@@ -45,7 +45,6 @@ class DisplayOptions{
                 </tbody>
             </table>
         <?php
-
         if (get_post_meta($product->get_id(), '_enable_custom_options', true) === 'yes') { // check if this gives errors when set to no, if so, make a check to see if its set
             echo '<div class="customOptions">';
             echo '<p>Eksta Tilbehør</p>';
@@ -68,22 +67,6 @@ class DisplayOptions{
                         <input type="number" name="holes_quantity" id="holes_quantity" min="1"/>
                     </p>
                 <?php
-                if (self::getPostMeta('_enable_hole_diameter')) {
-                    ?>
-                    <p>
-                        <label for="holes_diameter"><?php _e('Diameter (mm)', 'oliver1269woocommerce'); ?></label>
-                        <input type="number" name="holes_diameter" id="holes_diameter" min="1" step="0.1" />
-                    </p>
-                    <?php
-                }
-                if (self::getPostMeta('_enable_hole_schematic')) {
-                    ?>
-                    <p>
-                        <label for="holes_schematic"><?php _e('Skitse', 'oliver1269woocommerce'); ?></label>
-                        <input type="file" name="holes_schematic" id="holes_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
-                    </p>
-                    <?php
-                }
             }
 
             echo '</div>';
@@ -109,26 +92,7 @@ class DisplayOptions{
                     <p>
                         <label for="corners_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
                         <input type="number" name="corners_quantity" id="corners_quantity" min="1" max="4"/>
-                    </p>
-            <?php
-                if (self::getPostMeta('_enable_corner_radius')) {
-                ?>
-                    <p>
-                        <label for="corners_radius"><?php _e('Hjørne Radius (mm)', 'oliver1269woocommerce'); ?></label>
-                        <input type="number" name="corners_radius" id="corners_radius" min="1" step="0.1" />
-                    </p>
-                <?php
-                }
-                if (self::getPostMeta('_enable_corner_schematic')) {
-                ?>
-                    <p>
-                        <label for="corners_schematic"><?php _e('Skitse', 'oliver1269woocommerce'); ?></label>
-                        <input type="file" name="corners_schematic" id="corners_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
-                    </p>
-                    
-            <?php
-                }
-            ?>
+                    </p> 
             </div>
             <p id="mailNotifyCorner" class="mailNotify" style="display: none;">Efter betaling vil du modtage en mail, hvor du skal indtaste de specifikke dimensioner på dine ønsker</p>
             </fieldset>

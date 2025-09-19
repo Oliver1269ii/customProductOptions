@@ -26,33 +26,9 @@ class ProductSettings{
         ));
         
         woocommerce_wp_checkbox(array(
-            'id' => '_enable_hole_diameter',
-            'label' => __('Enable Hole Diameter', 'staaletCustomOptions'),
-            'description' => __('Show hole diameter field when holes are selected.', 'staaletCustomOptions')
-        ));
-        
-        woocommerce_wp_checkbox(array(
-            'id' => '_enable_hole_schematic',
-            'label' => __('Enable Hole Schematic Upload', 'staaletCustomOptions'),
-            'description' => __('Allow schematic upload for holes.', 'staaletCustomOptions')
-        ));
-        
-        woocommerce_wp_checkbox(array(
             'id' => '_enable_rounded_corners',
             'label' => __('Enable Rounded Corners', 'staaletCustomOptions'),
             'description' => __('Allow users to add rounded corners.', 'staaletCustomOptions')
-        ));
-
-        woocommerce_wp_checkbox(array(
-            'id' => '_enable_corner_radius',
-            'label' => __('Enable Corner Radius Field', 'staaletCustomOptions'),
-            'description' => __('Show corner radius field when rounded corners are selected.', 'staaletCustomOptions')
-        ));
-        
-        woocommerce_wp_checkbox(array(
-            'id' => '_enable_corner_schematic',
-            'label' => __('Enable Corner Schematic Upload', 'staaletCustomOptions'),
-            'description' => __('Allow schematic upload for rounded corners.', 'staaletCustomOptions')
         ));
         
         woocommerce_wp_checkbox(array(
@@ -68,11 +44,7 @@ class ProductSettings{
         $settings = [
             '_enable_custom_options',
             '_enable_holes',
-            '_enable_hole_diameter',
-            '_enable_hole_schematic',
             '_enable_rounded_corners',
-            '_enable_corner_radius',
-            '_enable_corner_schematic',
             '_enable_lakering'
         ];
         foreach ($settings as $option) {

@@ -20,19 +20,6 @@ class HandleCustomCartData {
             if (isset($_POST['holes_quantity']) && !empty($_POST['holes_quantity'])) {
                 $cart_item_data['holes_quantity'] = intval($_POST['holes_quantity']);
             }
-
-            if (isset($_POST['holes_diameter']) && !empty($_POST['holes_diameter'])) {
-                $cart_item_data['holes_diameter'] = floatval($_POST['holes_diameter']);
-            }
-
-            if (isset($_FILES['holes_schematic']) && !empty($_FILES['holes_schematic']['name'])) {
-                require_once ABSPATH . 'wp-admin/includes/file.php';
-                $upload = wp_handle_upload($_FILES['holes_schematic'], ['test_form' => false]);
-                
-                if (!isset($upload['error'])) {
-                    $cart_item_data['holes_schematic'] = $upload['url'];
-                }
-            }
         }
 
         if (isset($_POST['corners_choice']) && $_POST['corners_choice'] === 'Yes') {
@@ -41,24 +28,10 @@ class HandleCustomCartData {
             if (isset($_POST['corners_quantity']) && !empty($_POST['corners_quantity'])) {
                 $cart_item_data['corners_quantity'] = intval($_POST['corners_quantity']);
             }
-            
-            if (isset($_POST['corners_radius']) && !empty($_POST['corners_radius'])) {
-                $cart_item_data['corners_radius'] = floatval($_POST['corners_radius']);
-            }
-            
-            // Handle corners schematic upload
-            if (isset($_FILES['corners_schematic']) && !empty($_FILES['corners_schematic']['name'])) {
-                require_once ABSPATH . 'wp-admin/includes/file.php';
-                $upload = wp_handle_upload($_FILES['corners_schematic'], ['test_form' => false]);
-                
-                if (!isset($upload['error'])) {
-                    $cart_item_data['corners_schematic'] = $upload['url'];
-                }
-            }
         }
 
         if (isset($_POST['lakering_choice']) && $_POST['lakering_choice'] === 'Yes') {
-            $cart_item_data['lakering'] = 'Yes';
+            $cart_item_data['lakering'] = 'Ja';
             $length = isset($_POST['length']) ? floatval($_POST['length']) : 0;
             $width = isset($_POST['width']) ? floatval($_POST['width']) : 0;
             $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
@@ -82,7 +55,7 @@ class HandleCustomCartData {
     }
 
     public static function preserveDataWhenRestoring($cart_item, $values) {
-        $fields = ['holes','holes_quantity' , 'holes_diameter', 'holes_schematic', 'corners','corners_quantity', 'corners_radius', 'corners_schematic', 'lakering', 'lakering_price', 'unique_key'];
+        $fields = ['holes','holes_quantity' , 'corners','corners_quantity', 'lakering', 'lakering_price', 'unique_key'];
         foreach ($fields as $field) {
             if (isset($values[$field])) {
                 $cart_item[$field] = $values[$field];
@@ -98,35 +71,11 @@ class HandleCustomCartData {
                 'value' => $cart_item['holes']
             );
         }
-        if (!empty($cart_item['holes_diameter'])) {
-            $item_data[] = array(
-                'key' => __('Huller Diameter', 'staaletCustomOptions'),
-                'value' => $cart_item['holes_diameter'] . ' mm'
-            );
-        }
-        if (!empty($cart_item['holes_schematic'])) {
-            $item_data[] = array(
-                'key' => __('Huller Schematic', 'staaletCustomOptions'),
-                'value' => basename($cart_item['holes_schematic'])
-            );
-        }
 
         if (!empty($cart_item['corners'])) {
             $item_data[] = array(
-                'key' => __('Hjørner', 'staaletCustomOptions'),
+                'key' => __('Afr. Hjørner', 'staaletCustomOptions'),
                 'value' => $cart_item['corners']
-            );
-        }
-        if (!empty($cart_item['corners_radius'])) {
-            $item_data[] = array(
-                'key' => __('Hjørner Radius', 'staaletCustomOptions'),
-                'value' => $cart_item['corners_radius'] . ' mm'
-            );
-        }
-        if (!empty($cart_item['corners_schematic'])) {
-            $item_data[] = array(
-                'key' => __('Corners Schematic', 'staaletCustomOptions'),
-                'value' => basename($cart_item['corners_schematic'])
             );
         }
 
@@ -142,11 +91,7 @@ class HandleCustomCartData {
     public static function saveOptionsToOrder($item, $cart_item_key, $values, $order) {
         $fields = [
             'holes' => __('Huller', 'staaletCustomOptions'),
-            'holes_diameter' => __('Huller Diameter (mm)', 'staaletCustomOptions'),
-            'holes_schematic' => __('Huller Schematic URL', 'staaletCustomOptions'),
             'corners' => __('Afrundede Hjørner', 'staaletCustomOptions'),
-            'corners_radius' => __('Hjørne Radius (mm)', 'staaletCustomOptions'),
-            'corners_schematic' => __('Corners Schematic URL', 'staaletCustomOptions'),
             'lakering' => __('Lakering', 'staaletCustomOptions'),
         ];
         
