@@ -8,7 +8,8 @@ namespace inc\frontend;
 
 class HandleCustomFees {
     public static function register() {
-        add_action('woocommerce_cart_calculate_fees', [self::class, 'processFees']);
+        add_action('woocommerce_cart_calculate_fees', [self::class, 'processFees'],10 ,1);
+        add_action('woocommerce_cart_calculate_fees', [self::class, 'checkTotalForHandlingFee'], 20, 1);
 
         // Fallback: if we ever have to append a hidden "|id" to the fee name (legacy WC),
         // make sure customers never see it.
@@ -25,6 +26,8 @@ class HandleCustomFees {
         $firstHolePrice = $GLOBALS["firstHolePrice"];
         $additionalHolePrice = $GLOBALS["additionalHolePrice"];
         $cornerPrice = $GLOBALS['cornerPrice'];
+
+        $feesTotal = 0;
 
         if (is_admin() && ! defined('DOING_AJAX')) {
             return;
@@ -44,7 +47,7 @@ class HandleCustomFees {
                     $holes_fee = $firstHolePrice + max(0, $holes_qty - 1) * $additionalHolePrice;
                     $fees_to_add[] = [
                         'id'     => "holes_{$cart_item_key}",
-                        'name'   => sprintf(__('Huller (x %d)', 'staaletCustomOptions'), $holes_qty),
+                        'name'   => sprintf(__('Huller (x %d)', 'staaletCustomOptions'), $holes_qty*$quantity),
                         'amount' => $holes_fee * $quantity,
                     ];
                 }
@@ -57,7 +60,7 @@ class HandleCustomFees {
                     $corners_fee = $cornerPrice * $corners_qty;
                     $fees_to_add[] = [
                         'id'     => "corners_{$cart_item_key}",
-                        'name'   => sprintf(__('Afrundede Hjørner (x %d)', 'staaletCustomOptions'), $corners_qty),
+                        'name'   => sprintf(__('Afr. Hjørner (x %d)', 'staaletCustomOptions'), $corners_qty*$quantity),
                         'amount' => $corners_fee * $quantity,
                     ];
                 }
@@ -86,11 +89,30 @@ class HandleCustomFees {
                         'taxable'   => false, // change if your fees are taxable
                         'tax_class' => '',
                     ]);
+                    $feesTotal += $fee['amount'];
                 } else {
                     // Legacy fallback: encode uniqueness into the name; our filter hides it from display.
                     $cart->add_fee($fee['name'] . '|' . $fee_id, $fee['amount'], false, '');
+                    $feesTotal += $fee['amount'];
                 }
+           
             }
+            WC()->session->set('feesTotal', $feesTotal);
+        }
+    }
+
+    public static function checkTotalForHandlingFee($cart) {
+        $feeText = $GLOBALS['handlingFeeText'];
+        $feePrice = $GLOBALS['handlingFee'];
+
+        $fees = WC()->session->get('feesTotal');
+        $subTotal = $cart->get_subtotal();
+        $totalOfCart = $subTotal + $fees;
+        if ($totalOfCart <= 1000) {
+            $cart->add_fee(__($feeText, 'woocommerce'), $feePrice, false);
+            error_log('Handling fee added');
+        } else {
+            error_log('Handling fee not added');
         }
     }
 }

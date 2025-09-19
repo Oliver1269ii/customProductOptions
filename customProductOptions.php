@@ -29,6 +29,11 @@ if ( class_exists( 'inc\\Init' ) ) {
 	inc\Init::register_services();
 }
 
+
 $GLOBALS['firstHolePrice'] = 150;
 $GLOBALS["additionalHolePrice"] = 50;
 $GLOBALS["cornerPrice"] = 50;
+
+// Håndterings gebyr
+$GLOBALS['handlingFee'] = 250;
+$GLOBALS['handlingFeeText'] = "Håndteringsgebyr (Ved bestillinger under 1000 kr.)";
