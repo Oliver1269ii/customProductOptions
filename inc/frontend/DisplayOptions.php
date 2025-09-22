@@ -57,18 +57,18 @@ class DisplayOptions{
             if (self::getPostMeta('_enable_holes')) { 
                 ?>
                     <legend class="legend-inline">
-                        <strong><?php _e('Huller', 'oliver1269woocommerce'); ?></strong>
+                        <strong><?php _e('Huller', 'staaletCustomOptions'); ?></strong>
                         <i id="holePrice" class="holePrice" style="display: none;"><?php echo $initialHolePrice; ?></i>
                     </legend>
                     <div class="radio-group">
-                        <label><input type="radio" class="radioLeft" name="holes_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?></label>
-                        <label><input type="radio" class="radioRight" name="holes_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?></label>
+                        <label><input type="radio" class="radioLeft" name="holes_choice" value="Yes"> <?php _e('Ja', 'staaletCustomOptions'); ?></label>
+                        <label><input type="radio" class="radioRight" name="holes_choice" value="No" checked> <?php _e('Nej', 'staaletCustomOptions'); ?></label>
                     </div>
                     <?php 
                 ?>
                 <div id="holes-options" style="display: none; margin: 10px;">
                     <p>
-                        <label for="holes_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
+                        <label for="holes_quantity"><?php _e('Antal *', 'staaletCustomOptions'); ?></label>
                         <input type="number" name="holes_quantity" id="holes_quantity" min="1"/>
                     </p>
                 <?php
@@ -83,19 +83,19 @@ class DisplayOptions{
                 echo '<fieldset class="customOptions">';
                 ?>
                 <legend class="legend-inline">
-                    <strong><?php _e('Rundede Hjørner', 'oliver1269woocommerce'); ?></strong>
+                    <strong><?php _e('Rundede Hjørner', 'staaletCustomOptions'); ?></strong>
                     <i id="cornerPrice" class="cornerPrice" style="display: none;"><?php echo $initialCornerPrice; ?></i>
                 </legend>
                 <div class="radio-group">
-                    <label><input type="radio" class="radioLeft" name="corners_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?></label>
-                    <label><input type="radio" class="radioRight" name="corners_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?></label>
+                    <label><input type="radio" class="radioLeft" name="corners_choice" value="Yes"> <?php _e('Ja', 'staaletCustomOptions'); ?></label>
+                    <label><input type="radio" class="radioRight" name="corners_choice" value="No" checked> <?php _e('Nej', 'staaletCustomOptions'); ?></label>
                 </div> 
                 <?php
             
             ?>
                 <div id="corners-options" style="display: none; margin: 10px;">
                     <p>
-                        <label for="corners_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
+                        <label for="corners_quantity"><?php _e('Antal *', 'staaletCustomOptions'); ?></label>
                         <input type="number" name="corners_quantity" id="corners_quantity" min="1" max="4"/>
                     </p> 
             </div>
@@ -105,17 +105,17 @@ class DisplayOptions{
             }
             if (self::getPostMeta('_enable_lakering')) {
             ?>
-                <fieldset id="lakeringFieldset" class="oliver-option-groups">
+                <fieldset id="lakeringFieldset" class="staalet-custom-option-groups">
                 <legend class="legend-inline">
                     <strong>Lakering</strong>
                     <i class="lakeringPrice" id="lakeringPriceDropDown" style="display: none;">0 kr.</i>
                 </legend>
                 <div class="radio-group">
                 <label>
-                    <input type="radio" class="radioLeft" name="lakering_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?>
+                    <input type="radio" class="radioLeft" name="lakering_choice" value="Yes"> <?php _e('Ja', 'staaletCustomOptions'); ?>
                 </label>
                 <label>
-                    <input type="radio" class="radioRight" name="lakering_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?>
+                    <input type="radio" class="radioRight" name="lakering_choice" value="No" checked> <?php _e('Nej', 'staaletCustomOptions'); ?>
                 </label>
                 </div>
             <p id="mailNotifyLakering" class="mailNotify" style="display: none;">Efter betaling vil du modtage en mail, hvor du skal indtaste de specifikke dimensioner på dine ønsker</p>

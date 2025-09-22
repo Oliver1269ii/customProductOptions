@@ -6,7 +6,7 @@
 Plugin Name: Stålet Custom Product Options
 Plugin URI: https://github.com/Oliver1269ii/customProductOptions
 Description: A custom plugin for custom settings
-Version: 1.2.4
+Version: 1.2.5
 Author: Oliver "Oliver1269" Larsen
 Author URI: https://github.com/Oliver1269ii
 License: GPL-3.0-or-later
