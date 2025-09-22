@@ -49,10 +49,12 @@ function actualHoleUpdate(event) {
 
 function updateHolePrice() {
     const holesPriceDisplay = document.querySelectorAll('.holePrice');
+    const configHolePrice = parseInt(document.getElementById('configFirstHolePrice').textContent);
+    const configAdditionalHolePrice = parseInt(document.getElementById('configAdditionalHolePrice').textContent);
     let quantity = holesQuantity.value;
     if (quantity != "") {
         console.log("quantity exists");
-        const calculatedHolePrice = (quantity - 1) * 50 + 150;
+        const calculatedHolePrice = (quantity - 1) * configAdditionalHolePrice + configHolePrice;
         holesPriceDisplay.forEach(el => {
             el.innerHTML = `${calculatedHolePrice},00 kr.`;
         });
@@ -116,8 +118,9 @@ function actualCornerUpdate(event) {
 
 function updateCornerPrice() {
     const cornerPriceDisplay = document.querySelectorAll('.cornerPrice');
+    const configCornerPrice = parseInt(document.getElementById('configCornerPrice').textContent);
     let quantity = cornerQuantity.value;
-    const calculatedCornerPrice = quantity * 50;
+    const calculatedCornerPrice = quantity * configCornerPrice;
     cornerPriceDisplay.forEach(el => {
         el.innerHTML = `${calculatedCornerPrice},00 kr.`;
     });

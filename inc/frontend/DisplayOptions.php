@@ -13,11 +13,15 @@ class DisplayOptions{
     
     public static function display_options(){
         global $product;
-        $holePrice = '0,00 kr.';
-        $cornerPrice = '200,00 kr.';
-        
+        $initialHolePrice = '0,00 kr.';
+        $initialCornerPrice = '200,00 kr.';
+        $firstHolePrice = $GLOBALS['firstHolePrice'];
+        $additionalHolePrice = $GLOBALS['additionalHolePrice'];
+        $cornerPrice = $GLOBALS['cornerPrice'];
         ?>
-        
+        <p style="display: none;" id="configFirstHolePrice"><?php echo $firstHolePrice; ?></p>
+        <p style="display: none;" id="configAdditionalHolePrice"><?php echo $additionalHolePrice; ?></p>
+        <p style="display: none;" id="configCornerPrice"><?php echo $cornerPrice; ?></p>
         <table class="aveo_calculator cubric">
                 <tbody>
                 <tr>
@@ -54,7 +58,7 @@ class DisplayOptions{
                 ?>
                     <legend class="legend-inline">
                         <strong><?php _e('Huller', 'oliver1269woocommerce'); ?></strong>
-                        <i id="holePrice" class="holePrice" style="display: none;"><?php echo $holePrice; ?></i>
+                        <i id="holePrice" class="holePrice" style="display: none;"><?php echo $initialHolePrice; ?></i>
                     </legend>
                     <div class="radio-group">
                         <label><input type="radio" class="radioLeft" name="holes_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?></label>
@@ -80,7 +84,7 @@ class DisplayOptions{
                 ?>
                 <legend class="legend-inline">
                     <strong><?php _e('Rundede Hjørner', 'oliver1269woocommerce'); ?></strong>
-                    <i id="cornerPrice" class="cornerPrice" style="display: none;"><?php echo $cornerPrice; ?></i>
+                    <i id="cornerPrice" class="cornerPrice" style="display: none;"><?php echo $initialCornerPrice; ?></i>
                 </legend>
                 <div class="radio-group">
                     <label><input type="radio" class="radioLeft" name="corners_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?></label>
