@@ -1,4 +1,3 @@
-
 // Holes handler
 
 const holesQuantity = document.getElementById('holes_quantity');
@@ -9,7 +8,6 @@ function updateHoles(event) {
         const loader = document.getElementById('loader');
         if (!loader) {
             clearInterval(intervalId); // stop checking
-                console.log("Loader gone");
                 actualHoleUpdate(event);     // run your code
         }
     }, 100);
@@ -53,7 +51,6 @@ function updateHolePrice() {
     const configAdditionalHolePrice = parseInt(document.getElementById('configAdditionalHolePrice').textContent);
     let quantity = holesQuantity.value;
     if (quantity != "") {
-        console.log("quantity exists");
         const calculatedHolePrice = (quantity - 1) * configAdditionalHolePrice + configHolePrice;
         holesPriceDisplay.forEach(el => {
             el.innerHTML = `${calculatedHolePrice},00 kr.`;
@@ -77,7 +74,6 @@ function updateCorners(event) {
         const loader = document.getElementById('loader');
         if (!loader) {
             clearInterval(intervalId); // stop checking
-                console.log("Loader gone");
                 actualCornerUpdate(event);     // run your code
         }
     }, 100);
@@ -141,7 +137,6 @@ function updateLakering(event) {
         const loader = document.getElementById('loader');
         if (!loader) {
             clearInterval(intervalId); // stop checking
-                console.log("Loader gone");
                 actualLakeringUpdate(event);     // run your code
         }
     }, 100);
@@ -177,7 +172,6 @@ function calculateLakeringPrice() {
         const loader = document.getElementById('loader');
         if (!loader) {
             clearInterval(intervalId); // stop checking
-                console.log("Loader gone");
                 actualCalculateLakeringPrice();     // run your code
         }
     }, 100);
@@ -218,7 +212,6 @@ function updateTotalPrice() {
         const loader = document.getElementById('loader');
         if (!loader) {
             clearInterval(intervalId); // stop checking
-                console.log("Loader gone");
                 actualTotalPriceUpdate();     // run your code
         }
     }, 100);
@@ -228,24 +221,32 @@ function actualTotalPriceUpdate() {
     const totalPriceBdi = document.querySelector('.total_price td:last-child span bdi');
     let basePrice = getPrice('.single_price .woocommerce-Price-amount bdi');
     let clipPrice = getPrice('.cut_price .woocommerce-Price-amount bdi')
-    let totalPrice = basePrice + clipPrice;
-    if (holesEnabled) {
-        totalPrice += updateHolePrice();
-    }
-    if (cornersEnabled) {
-        totalPrice += updateCornerPrice();
-    }
-    if (lakeringEnabled) {
-        lakeringPrice = actualCalculateLakeringPrice();
-        if (typeof lakeringPrice !== "undefined") {
-            totalPrice += lakeringPrice;
-        }
-    }
-    totalPriceBdi.innerHTML = formatPrice(totalPrice + " kr.");
+	let totalPrice = 0
+	
+	if (holesEnabled) {
+		totalPrice += updateHolePrice();
+	}
+	if (cornersEnabled) {
+		totalPrice += updateCornerPrice();
+	}
+	if (lakeringEnabled) {
+		lakeringPrice = actualCalculateLakeringPrice();
+		if (typeof lakeringPrice !== "undefined") {
+			totalPrice += lakeringPrice;
+	}
+	}
+		if (basePrice !== null || clipPrice !== null) {
+			totalPrice += basePrice + clipPrice;
+			formattedPrice = formatPrice(totalPrice);
+			totalPriceBdi.innerHTML = formattedPrice + " kr.";
+	}
 }
 
 function getPrice(field) {
     const priceElement = document.querySelector(field);
+	if (!priceElement) {
+        return null; // or return 0 if you prefer a numeric fallback
+    }
     let priceText = priceElement.textContent.trim();
     priceText = priceText.replace(/[^\d.,]/g, '');
     priceText = priceText.replace(/\.(?=\d{3},)/g, '');
@@ -255,7 +256,7 @@ function getPrice(field) {
 
 function formatPrice(number) {
     // Convert to fixed 2 decimal places to ensure decimal exists
-    const parts = number.split('.'); // ["4459", "13"]
+    const parts = number.toFixed(2).split('.'); // ["4459", "13"]
     const integer = parts[0];
     const decimal = parts[1];
 
@@ -266,3 +267,14 @@ function formatPrice(number) {
 
     return `${formattedInteger},${decimal}`; // combine with comma
 }
+
+function sleep(milliseconds) {
+    var start = new Date().getTime();
+    for (var i = 0; i < 1e7; i++) {
+      if ((new Date().getTime() - start) > milliseconds){
+        break;
+      }
+    }
+  }
+
+setInterval(actualTotalPriceUpdate, 1000);
