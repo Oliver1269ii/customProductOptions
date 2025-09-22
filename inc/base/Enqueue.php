@@ -15,12 +15,20 @@ class Enqueue{
             $enabled = get_post_meta($post->ID, '_enable_custom_options', true);
             if ($enabled === 'yes') {
                 wp_enqueue_script(
-                    'CustomOptionsScript',
-                    plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/js/FrontendCustomOptionsHandler.js',
+                    'CustomOptionsFunctions',
+                    plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/js/Functions.js',
                     array(),
                     '1.0',
                     true
                 );
+                wp_enqueue_script(
+                    'CustomOptionsHandler',
+                    plugin_dir_url( dirname( __FILE__, 2 ) ) . 'assets/js/OptionsHandler.js',
+                    array(),
+                    '1.0',
+                    true
+                );
+
 
                 wp_enqueue_style(
                     'ExamplePluginStyle', // Referral name

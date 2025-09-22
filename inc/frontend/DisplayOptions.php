@@ -13,8 +13,9 @@ class DisplayOptions{
     
     public static function display_options(){
         global $product;
-        $holePrice = '0 kr.';
-        $cornerPrice = '200 kr.';
+        $holePrice = '0,00 kr.';
+        $cornerPrice = '200,00 kr.';
+        
         ?>
         
         <table class="aveo_calculator cubric">
@@ -39,7 +40,7 @@ class DisplayOptions{
                         <span>Mellem 30mm og 1500mm</span></td>
                     <td><input type="number" name="width" step="1" min="30" max="1500" value="" class="input-text" placeholder="100" required=""></td>
                 </tr>
-                <tr class="single_price"><td>Pris pr. stk</td><td><span class="woocommerce-Price-amount amount"><bdi>3,13&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
+                <tr class="single_price"><td>Pris pr. stk</td><td><span class="woocommerce-Price-amount amount"><bdi>3.500,13&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
                 <tr class="cut_price"><td>Klip</td><td><span class="woocommerce-Price-amount amount"><bdi>20,00&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
                 <tr class="total_price"><td>Total Pris</td><td><span class="woocommerce-Price-amount amount"><bdi>3.500,00&nbsp;<span class="woocommerce-Price-currencySymbol">kr.</span></bdi></span></td></tr>
                 </tbody>
