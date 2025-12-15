@@ -40,8 +40,6 @@ document.addEventListener('DOMContentLoaded', function() {
             </span></td>
         `;
 
-
-    
         // Insert rows in correct order (before total price row)
         tableBody.insertBefore(holesRow, totalPriceRow);
         tableBody.insertBefore(cornersRow, totalPriceRow);
@@ -49,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error("Total price row not found");
     }
-
 
     const holesRadios = document.getElementsByName('holes_choice');
     const holesOptions = document.getElementById('holes-options');
@@ -63,9 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 holesOptions.style.display = 'block';
                 holesRow.style.display = 'table-row';
                 holesQuantity.setAttribute('required', 'required');
-                holesQuantity.addEventListener('input', updateTotalPrice);
+                holesQuantity.addEventListener('input', safeUpdateTotalPrice);
             } else {
-                holesQuantity.removeEventListener('input', updateTotalPrice);
+                holesQuantity.removeEventListener('input', safeUpdateTotalPrice);
                 holesQuantity.removeAttribute('required');
                 holesQuantity.value = '';
                 holesRow.style.display = 'none';
@@ -73,10 +70,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 holesPriceDisplay.forEach(el => {
                     el.innerHTML = `150kr for det første, derefter 50kr stykket`;
                 });
-
             }
         });
     });
+
     function updateHolePrice() {
         let n = parseInt(holesQuantity.value, 10);
 
@@ -91,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         return calculatedHolePrice;
     }
+
     const cornerQuantity = document.getElementById('corners_quantity');
     const cornerPriceDisplay = document.querySelectorAll('.cornerPrice');
     const cornerRadios = document.getElementsByName('corners_choice');
@@ -103,9 +101,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 cornerOptions.style.display = 'block';
                 cornersRow.style.display = 'table-row';
                 cornerQuantity.setAttribute('required', 'required');
-                cornerQuantity.addEventListener('input', updateTotalPrice);
+                cornerQuantity.addEventListener('input', safeUpdateTotalPrice);
             } else {
-                cornerQuantity.removeEventListener('input', updateTotalPrice);
+                cornerQuantity.removeEventListener('input', safeUpdateTotalPrice);
                 cornerQuantity.removeAttribute('required');
                 cornerQuantity.value = '';
                 cornersRow.style.display = 'none';
@@ -116,12 +114,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
     function updateCornerPrice() {
         let n = parseInt(cornerQuantity.value, 10);
 
         // Ensure n is a valid number and >= 1
         if (isNaN(n) || n < 1) {
-        n = 1;
+            n = 1;
         }
 
         const calculatedCornerPrice = n * 50;
@@ -164,69 +163,167 @@ document.addEventListener('DOMContentLoaded', function() {
         return lakeringResult;
     }
 
-    if (lengthInput) lengthInput.addEventListener('input', updateTotalPrice);
-    if (widthInput) widthInput.addEventListener('input', updateTotalPrice);
-    if (quantityInput) quantityInput.addEventListener('input', updateTotalPrice);
-    
     // Lakering functionality
     const lakeringRadios = document.getElementsByName('lakering_choice');
     lakeringRadios.forEach(radio => {
         radio.addEventListener('change', function() {
             if (this.value === 'Yes') {
-                lakeringPriceDropDown.style.display = 'block';
-                lakeringRow.style.display = 'table-row';
-                updateTotalPrice();
+                if (lakeringPriceDropDown) lakeringPriceDropDown.style.display = 'block';
+                if (lakeringRow) lakeringRow.style.display = 'table-row';
+                safeUpdateTotalPrice();
             } else {
-                lakeringRow.style.display = 'none';
-                lakeringPriceDropDown.style.display = 'none';
-                if (lakeringPriceDropDown) {
-                    holesPriceDisplay.forEach(el => {
+                if (lakeringRow) lakeringRow.style.display = 'none';
+                if (lakeringPriceDropDown) lakeringPriceDropDown.style.display = 'none';
+                if (lakeringPriceDisplay.length > 0) {
+                    lakeringPriceDisplay.forEach(el => {
                         el.innerHTML = `0kr,-`;
                     });
                 }
             }
         });
     });
-    const totalPriceBdi = document.querySelector('.total_price td:last-child span bdi');
-    lengthInput.addEventListener('input', updateTotalPrice);
-    widthInput.addEventListener('input', updateTotalPrice);
-    quantityInput.addEventListener('input', updateTotalPrice);
+
+    // Add event listeners with proper element checks
+    if (lengthInput) lengthInput.addEventListener('input', safeUpdateTotalPrice);
+    if (widthInput) widthInput.addEventListener('input', safeUpdateTotalPrice);
+    if (quantityInput) quantityInput.addEventListener('input', safeUpdateTotalPrice);
+    
+    // Fixed updateTotalPrice function with proper element checks
     function updateTotalPrice() {
+        isUpdatingTotal = true; // Flag to prevent monitoring from triggering
+        
+        // Find the total price element each time the function runs
         const totalPriceBdi = document.querySelector('.total_price td:last-child span bdi');
         
-        let total = parseFloat(totalPriceBdi.textContent.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+        // Exit early if the element doesn't exist or isn't visible
+        if (!totalPriceBdi || !totalPriceBdi.textContent) {
+            console.log('Total price element not found or not ready');
+            isUpdatingTotal = false;
+            return;
+        }
 
+        // Check if the element is visible (not hidden by other scripts)
+        const totalPriceRow = totalPriceBdi.closest('.total_price');
+        if (!totalPriceRow || totalPriceRow.style.display === 'none' || 
+            getComputedStyle(totalPriceRow).display === 'none') {
+            console.log('Total price row is hidden');
+            isUpdatingTotal = false;
+            return;
+        }
+
+        // Start with the stored base price instead of reading from the element
+        let total = basePrice;
+        
+        // If base price is 0, try to get it from the current element (fallback)
+        if (total === 0) {
+            total = parseFloat(totalPriceBdi.textContent.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+            basePrice = total; // Store it for next time
+        }
+    
         if (document.getElementById('holeTotal')) {
             holesRadios.forEach(radio => {
                 if (radio.value === 'Yes' && radio.checked) {
-                    let holeTotal = updateHolePrice(); // updateHolePrice must return a number
-                    total += holeTotal;
-
+                    let holeTotal = updateHolePrice();
+                    if (typeof holeTotal === 'number' && !isNaN(holeTotal)) {
+                        total += holeTotal;
+                    }
                 }
             });
         }
-        
-        if (document.getElementById('holeTotal')) {
+    
+        if (document.getElementById('cornerTotal')) {
             cornerRadios.forEach(radio => {
                 if (radio.value === 'Yes' && radio.checked) {
-                    let cornerTotal = updateCornerPrice(); // updateHolePrice must return a number
-                    total += cornerTotal;
-                    console.log('true');
+                    let cornerTotal = updateCornerPrice();
+                    if (typeof cornerTotal === 'number' && !isNaN(cornerTotal)) {
+                        total += cornerTotal;
+                    }
                 }
             });
         }
-        
+    
         if (document.getElementById('lakeringTotal')) {
-            lakeringTotal = calculateLakeringPrice();
-            if (typeof lakeringTotal !== 'undefined' && lakeringTotal !== null) {
-                calculateLakeringPrice();
+            let lakeringTotal = calculateLakeringPrice();
+            if (typeof lakeringTotal === 'number' && !isNaN(lakeringTotal)) {
                 total += lakeringTotal;
-                
             }
         }
-        totalPriceBdi.innerHTML = total;
+    
+        // Only update if we have a valid total
+        if (typeof total === 'number' && !isNaN(total)) {
+            totalPriceBdi.innerHTML = total.toFixed(2).replace('.', ',');
+            lastKnownTotal = totalPriceBdi.textContent; // Update our tracking
+        }
         
-    };  
+        isUpdatingTotal = false; // Reset flag
+    }
+
+    // Track the last known total to detect when external script changes it
+    let lastKnownTotal = null;
+    let isUpdatingTotal = false;
+    let basePrice = 0; // Store the original base price from external script
+
+    // Optional: Retry mechanism for when the total price element isn't immediately available
+    function safeUpdateTotalPrice() {
+        if (isUpdatingTotal) return; // Prevent recursion
+        
+        const totalPriceBdi = document.querySelector('.total_price td:last-child span bdi');
+        if (totalPriceBdi && totalPriceBdi.textContent) {
+            updateTotalPrice();
+        } else {
+            // Retry after a short delay if element isn't ready
+            setTimeout(() => {
+                const retryElement = document.querySelector('.total_price td:last-child span bdi');
+                if (retryElement && retryElement.textContent) {
+                    updateTotalPrice();
+                }
+            }, 100);
+        }
+    }
+
+    // Monitor for external script changes and re-apply our calculations
+    function monitorTotalPriceChanges() {
+        const totalPriceBdi = document.querySelector('.total_price td:last-child span bdi');
+        if (!totalPriceBdi) return;
+
+        const currentTotal = totalPriceBdi.textContent;
+        
+        // If the total changed and we weren't the ones who changed it
+        if (currentTotal !== lastKnownTotal && !isUpdatingTotal) {
+            console.log('External script changed total price, capturing new base price');
+            
+            // Capture the new base price from external script
+            const newBasePrice = parseFloat(currentTotal.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+            
+            // Only update base price if it's different and seems like a valid base price
+            // (not one that already includes our additions)
+            if (newBasePrice !== basePrice) {
+                basePrice = newBasePrice;
+                console.log('New base price captured:', basePrice);
+            }
+            
+            // Wait a moment to ensure external script is done, then re-apply our changes
+            setTimeout(() => {
+                updateTotalPrice();
+            }, 50);
+        }
+        
+        lastKnownTotal = currentTotal;
+    }
+
+    // Initialize base price on page load
+    function initializeBasePrice() {
+        const totalPriceBdi = document.querySelector('.total_price td:last-child span bdi');
+        if (totalPriceBdi && totalPriceBdi.textContent) {
+            basePrice = parseFloat(totalPriceBdi.textContent.replace(/[^\d,.-]/g, '').replace(',', '.')) || 0;
+            lastKnownTotal = totalPriceBdi.textContent;
+            console.log('Initial base price set to:', basePrice);
+        }
+    }
+
+    // Initialize base price
+    initializeBasePrice();
+
+    // Start monitoring every 200ms
+    setInterval(monitorTotalPriceChanges, 200);
 });
-
-

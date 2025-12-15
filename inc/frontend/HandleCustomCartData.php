@@ -157,6 +157,10 @@ class HandleCustomCartData {
                     $value = esc_url($value);
                 }
                 $item->add_meta_data($label, $value, true);
+    
+                if (in_array($key, ['holes','corners','lakering'], true)) {
+                    $order->update_meta_data("_{$key}", 'yes');
+                }
             }
         }
     }

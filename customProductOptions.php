@@ -28,3 +28,7 @@ register_deactivation_hook( __FILE__, function(){ Deactivate::deactivate();});
 if ( class_exists( 'inc\\Init' ) ) {
 	inc\Init::register_services();
 }
+
+$firstHolePrice = 150;
+$additionalHolePrice = 50;
+$cornerPrice = 50;

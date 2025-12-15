@@ -49,47 +49,49 @@ class DisplayOptions{
         if (get_post_meta($product->get_id(), '_enable_custom_options', true) === 'yes') { // check if this gives errors when set to no, if so, make a check to see if its set
             echo '<div class="customOptions">';
             echo '<fieldset class="customOptions">';
+            echo '<p>Eksta Tilbehør</p>';
             if (self::getPostMeta('_enable_holes')) { 
                 ?>
-                <legend><strong><?php _e('Huller', 'oliver1269woocommerce'); ?></strong></legend>
-                <label>
-                    <input type="radio" name="holes_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?>
-                </label><br>
-                <label>
-                    <input type="radio" name="holes_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?>
-                </label><br>
-                <?php 
-            }
-            ?>
-            <div id="holes-options" style="display: none; margin-left: 20px; margin-bottom: 20px;">
-                <p>
-                    <label for="holes_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
-                    <input type="number" name="holes_quantity" id="holes_quantity" min="1" />
-                </p>
-            <?php
-            if (self::getPostMeta('_enable_hole_diameter')) {
+                    <legend><strong><?php _e('Huller', 'oliver1269woocommerce'); ?></strong></legend>
+                    <label>
+                        <input type="radio" name="holes_choice" value="Yes"> <?php _e('Ja', 'oliver1269woocommerce'); ?>
+                    </label><br>
+                    <label>
+                        <input type="radio" name="holes_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?>
+                    </label><br>
+                    <?php 
                 ?>
-                <p>
-                    <label for="holes_diameter"><?php _e('Diameter (mm)', 'oliver1269woocommerce'); ?></label>
-                    <input type="number" name="holes_diameter" id="holes_diameter" min="1" step="0.1" />
-                </p>
+                <div id="holes-options" style="display: none; margin-left: 20px; margin-bottom: 20px;">
+                    <p>
+                        <label for="holes_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
+                        <input type="number" name="holes_quantity" id="holes_quantity" min="1" />
+                    </p>
                 <?php
-            }
-            if (self::getPostMeta('_enable_hole_schematic')) {
-                ?>
-                <p>
-                    <label for="holes_schematic"><?php _e('Skitse', 'oliver1269woocommerce'); ?></label>
-                    <input type="file" name="holes_schematic" id="holes_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
-                </p>
-                <?php
+                if (self::getPostMeta('_enable_hole_diameter')) {
+                    ?>
+                    <p>
+                        <label for="holes_diameter"><?php _e('Diameter (mm)', 'oliver1269woocommerce'); ?></label>
+                        <input type="number" name="holes_diameter" id="holes_diameter" min="1" step="0.1" />
+                    </p>
+                    <?php
+                }
+                if (self::getPostMeta('_enable_hole_schematic')) {
+                    ?>
+                    <p>
+                        <label for="holes_schematic"><?php _e('Skitse', 'oliver1269woocommerce'); ?></label>
+                        <input type="file" name="holes_schematic" id="holes_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
+                    </p>
+                    <?php
+                }
             }
 
             echo '</div>';
             echo '<i class="holePrice">' . $holePrice . '</i>';
             echo '</fieldset>';
-            echo '<fieldset class="customOptions">';
+            
 
             if (self::getPostMeta('_enable_rounded_corners')) {
+                echo '<fieldset class="customOptions">';
                 ?>
                 <legend><strong><?php _e('Rundede Hjørner', 'oliver1269woocommerce'); ?></strong></legend>
                 <label>
@@ -99,31 +101,35 @@ class DisplayOptions{
                     <input type="radio" name="corners_choice" value="No" checked> <?php _e('Nej', 'oliver1269woocommerce'); ?>
                 </label><br>
                 <?php
-            }
+            
             ?>
-            <div id="corners-options" style="display: none; margin-left: 20px; margin-bottom: 20px;">
-                <p>
-                    <label for="corners_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
-                    <input type="number" name="corners_quantity" id="corners_quantity" min="1" />
-                </p>
+                <div id="corners-options" style="display: none; margin-left: 20px; margin-bottom: 20px;">
+                    <p>
+                        <label for="corners_quantity"><?php _e('Antal *', 'oliver1269woocommerce'); ?></label>
+                        <input type="number" name="corners_quantity" id="corners_quantity" min="1" />
+                    </p>
             <?php
-            if (self::getPostMeta('_enable_rounded_corners')) {
-            ?>
-                <p>
-                    <label for="corners_radius"><?php _e('Hjørne Radius (mm)', 'oliver1269woocommerce'); ?></label>
-                    <input type="number" name="corners_radius" id="corners_radius" min="1" step="0.1" />
-                </p>
+                if (self::getPostMeta('_enable_corner_radius')) {
+                ?>
+                    <p>
+                        <label for="corners_radius"><?php _e('Hjørne Radius (mm)', 'oliver1269woocommerce'); ?></label>
+                        <input type="number" name="corners_radius" id="corners_radius" min="1" step="0.1" />
+                    </p>
+                <?php
+                }
+                if (self::getPostMeta('_enable_corner_schematic')) {
+                ?>
+                    <p>
+                        <label for="corners_schematic"><?php _e('Skitse', 'oliver1269woocommerce'); ?></label>
+                        <input type="file" name="corners_schematic" id="corners_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
+                    </p>
+                    
             <?php
-            }
-            if (self::getPostMeta('_enable_corner_schematic')) {
+                }
             ?>
-                <p>
-                    <label for="corners_schematic"><?php _e('Skitse', 'oliver1269woocommerce'); ?></label>
-                    <input type="file" name="corners_schematic" id="corners_schematic" accept=".pdf,.jpg,.jpeg,.png,.dwg" />
-                </p>
-                </div>
-                <?php echo '<i class="cornerPrice">' . $cornerPrice . '</i>'; ?>
-                </fieldset>
+            </div>
+            <?php echo '<i class="cornerPrice">' . $cornerPrice . '</i>'; ?>
+            </fieldset>
             <?php
             }
             if (self::getPostMeta('_enable_lakering')) {
@@ -141,7 +147,6 @@ class DisplayOptions{
             <?php
             }
             echo '</div>';
-            echo '</fieldset>';
 
         }
 
