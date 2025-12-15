@@ -1,0 +1,43 @@
+.customOptions {
+    margin: 0;             
+    padding: 0.5rem 0.75rem !important; 
+}
+
+.customOptions legend {
+    margin: 0;  
+    padding: 0 0.25rem !important;      
+}
+
+.customOptions .radio-group {
+    display: flex;
+    gap: 1rem;               
+    margin: 0 !important;    
+}
+
+.customOptions p,
+.customOptions .price-note {
+    margin: 0 !important;
+    font-style: italic;   
+}
+
+.customOptions label {
+    margin-bottom: 0;
+}
+
+.legend-inline {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+}
+  
+.cornerPrice, .lakeringPrice, .holePrice  {
+    margin-left: 0.5rem;
+}
+
+#lakeringFieldset {
+    margin-bottom: 1em;
+}
+
+.mailNotify {
+    font-size: small;
+}
